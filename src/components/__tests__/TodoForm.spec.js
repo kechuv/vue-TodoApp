@@ -4,10 +4,12 @@ import { mount } from '@vue/test-utils';
 import TodoForm from '@/components/TodoForm.vue';
 
 describe('TodoForm', () => {
-  describe('New Todo', () => {
+
+  describe('On new', () => {
     const wrapper = mount(TodoForm);
-    const input = wrapper.find('input');
-    it('should render empty form', () => {
+    const input = wrapper.find('input[type=text]');
+
+    it('should render empty todo', () => {
       expect(input.element.value).toBeFalsy();
     });
     it('should emit a new todo', async() => {
@@ -21,14 +23,16 @@ describe('TodoForm', () => {
       expect(emit[0][0]).toHaveProperty('userId');
     });
   });
-  describe('Edit todo', () => {
+
+  describe('On edit', () => {
     const wrapper = mount(TodoForm, {
       props: {
         todo: mockTodo
       }
     });
-    const input = wrapper.find('input');
-    it('should render todo to be edited', () => {
+    const input = wrapper.find('input[type=text]');
+
+    it('should render todo to be edited', async() => {
       expect(input.element.value).toBe('test todo');
     });
     it('should emit edited todo', async() => {

@@ -9,6 +9,7 @@ describe('TodoList', () => {
       todos: mockTodoList
     }
   });
+
   it('should render todos', () => {
     const todos = wrapper.findAll('.todo-row');
     expect(todos.length).toEqual(3);

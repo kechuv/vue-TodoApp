@@ -15,6 +15,7 @@ describe('TodoRow', () => {
       }
     }
   });
+
   it('should render todo', () => {
     expect(wrapper.find('.text').exists()).toBe(true);
     expect(wrapper.find('.text').text()).toBe(mockTodo.todo);
@@ -41,12 +42,14 @@ describe('TodoRow', () => {
     expect(wrapper.find('.text').exists()).toBe(false);
     expect(wrapper.find('form').exists()).toBe(true);
   });
+
   describe('should render back todo text', () => {
     beforeEach(async() => {
       if (!wrapper.find('form').exists()) {
         await wrapper.find('.edit').trigger('click');
       }
     });
+
     it('on cancel', async() => {
       const cancelButton = wrapper.find('.cancel');
       await cancelButton.trigger('click');
