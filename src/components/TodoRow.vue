@@ -3,25 +3,30 @@
     <input
       type="checkbox"
       :checked="todo.done"
-      @change="$emit('toggleStatus')"
+      @change="toggleStatus(todo)"
     />
     <template
       v-if="!edit"
     >
-      <p>{{ todo.todo }}</p>
+      <p class="text">{{ todo.todo }}</p>
       <button
+        class="edit"
         type="button"
         @click="edit = true"
       >
         Edit
       </button>
     </template>
-    <TodoForm
+    <template
       v-else
-      :todo="todo"
-      @submit="handleEdit"
-      @cancel="edit = false"
-    />
+    >
+      <span></span>
+      <TodoForm
+        :todo="todo"
+        @submit="handleEdit"
+        @cancel="edit = false"
+      />
+    </template>
     <button
       type="button"
       @click="$emit('remove')"
@@ -33,6 +38,7 @@
 
 <script setup>
 import { defineAsyncComponent, ref, toRef } from 'vue';
+// import TodoForm from './TodoForm.vue';
 
 const TodoForm = defineAsyncComponent(() => import('./TodoForm.vue'));
 
@@ -51,8 +57,21 @@ const emit = defineEmits(['update', 'remove', 'toggleStatus']);
 
 const edit = ref(false);
 
+/**
+ * @function handleEdit
+ * @param {Todo} $event 
+ */
 function handleEdit($event) {
   emit('update', $event);
   edit.value = false;
+}
+
+/**
+ * @function toggleStatus
+ * @param {Todo} todo 
+ */
+function toggleStatus(todo) {
+  todo.done = !todo.done;
+  handleEdit(todo);
 }
 </script>

@@ -1,5 +1,6 @@
 <template>
   <form
+    class="todo-form"
     @submit.prevent="saveTodo(todoRef)"
   >
     <input
@@ -11,11 +12,15 @@
     <button
       v-if="todoRef.id"
       type="button"
+      class="cancel"
       @click="resetTodo(todo)"
     >
       Cancel
     </button>
-    <button type="submit">
+    <button
+      type="submit"
+      class="submit"
+    >
       Save
     </button>
   </form>

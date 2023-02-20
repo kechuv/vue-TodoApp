@@ -1,14 +1,17 @@
 <template>
-  <div>
-    <TodoRow
+  <ul class="todo-list">
+    <li
       v-for="(todo, todoIndex) in todos"
       :key="todoIndex"
-      :todo="todo"
-      @update="$emit('update', $event)"
-      @toggle-status="toggleStatus(todo)"
-      @remove="$emit('remove', todo)"
-    />
-  </div>
+      class="todo-row"
+    >
+      <TodoRow
+        :todo="todo"
+        @update="$emit('update', $event)"
+        @remove="$emit('remove', todo)"
+      />
+    </li>
+  </ul>
 </template>
 
 <script setup>
@@ -22,17 +25,9 @@ const props = defineProps({
     default: () => ([])
   }
 });
-const emit = defineEmits(['update', 'remove']);
+defineEmits(['update', 'remove']);
+
 /** @typedef {import('@/stores/todoStore').Todo} Todo */
 /** @type {import('vue').Ref<Todo[]>} */
 const todos = toRef(props, 'todos');
-
-/**
- * @function toggleStatus
- * @param {Todo} todo 
- */
-function toggleStatus(todo) {
-  todo.done = !todo.done;
-  emit('update', todo);
-}
 </script>
